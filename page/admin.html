@@ -63,20 +63,23 @@
 				<div class="layui-side-scroll">
 					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
 					<ul class="layui-nav layui-nav-tree" lay-filter="test">
-						<li class="layui-nav-item layui-nav-itemed">
-							<a class="" href="javascript:;">所有商品</a>
+						<li class="layui-nav-item layui-nav-itemed" id="contList">
+							<a class="" href="javascript:;">媒体订单流程</a>
 							<dl class="layui-nav-child">
 								<dd>
-									<a href="javascript:;">列表一</a>
+									<a target="midea/baojia.html">报价单管理</a>
 								</dd>
 								<dd>
-									<a href="javascript:;">列表二</a>
+									<a target="midea/xiaoshou.html">销售合同管理</a>
 								</dd>
 								<dd>
-									<a href="javascript:;">列表三</a>
+									<a target="midea/caigou.html">采购合同管理</a>
 								</dd>
 								<dd>
-									<a href="">超链接</a>
+									<a target="midea/kaipiao.html">开票申请管理</a>
+								</dd>
+								<dd>
+									<a target="midea/zhifu.html">支付申请管理</a>
 								</dd>
 							</dl>
 						</li>
@@ -106,7 +109,7 @@
 
 			<div class="layui-body">
 				<!-- 内容主体区域 -->
-				<div style="padding: 15px;">内容主体区域</div>
+				<div style="padding: 15px;" id="contShow">内容主体区域</div>
 			</div>
 
 			<div class="layui-footer">
@@ -114,11 +117,27 @@
 				© layui.com - 底部固定区域
 			</div>
 		</div>
+		<script src="../js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="../lib/layui/layui.all.js"></script>
 		<script>
 			//JavaScript代码区域
-			layui.use('element', function() {
-				var element = layui.element;
+			layui.use(['element', 'jquery'], function() {
+				var layer = layui.element;
+				$ = layui.jquery;
+
+				$(function() {
+					$.get("midea/baojia.html", function(data) {
+						$("#contShow").html(data); //初始化加载界面
+					});
+
+					$('#contList dd').click(function() { //点击li加载界面
+						var current = $(this),
+							target = current.find('a').attr('target'); // 找到链接a中的targer的值
+						$.get(target, function(data) {
+							$("#contShow").html(data);
+						});
+					});
+				});
 
 			});
 		</script>
